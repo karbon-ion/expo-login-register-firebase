@@ -65,7 +65,7 @@ export const loginUser = async (email: string, password: string) => {
             return {error: 'Email not Varified'}
         }
         const role = await getUserRole(userCredential.user.uid);
-        return { ...userCredential, role };
+        return { ...userCredential.user, role };
     } catch (error) {
         console.error('Login error:', error);
         throw error;

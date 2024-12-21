@@ -1,8 +1,9 @@
-import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 import { Link, router } from 'expo-router';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { loginUser } from '../../services/authService';
+import { useAppContext } from '~/hooks/context';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
@@ -13,6 +14,8 @@ const LoginSchema = Yup.object().shape({
 });
 
 export default function LoginScreen() {
+
+  const {setUser} = useAppContext()
 
   return (
     <KeyboardAvoidingView 
@@ -28,9 +31,10 @@ export default function LoginScreen() {
           validationSchema={LoginSchema}
           onSubmit={async (values, { setSubmitting, setStatus }) => {
             try {
-              const { role, error } = await loginUser(values.email, values.password);
+              const { role, error, ...user } = await loginUser(values.email, values.password);
               // Navigate based on user role
               if (role) {
+                setUser({...user, role})
                 router.replace(role === 'user' ? '/(user)/home':'/(admin)/dashboard');
               }
               setStatus(error)

@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
 import { useAppContext } from '~/hooks/context';
 import Loading from '~/components/Loading';
+import { View } from 'react-native';
 
 export default function TabLayout() {
 
@@ -40,8 +41,8 @@ export default function TabLayout() {
           <Tabs.Screen
             name="index"
             options={{
-              title: 'Tab One',
-              tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+              title: 'Sign In',
+              tabBarIcon: ({ color }) => <TabBarIcon name="sign-in" color={color} />,
               headerRight: () => (
                 <Link href="/modal" asChild>
                   <HeaderButton />
@@ -53,7 +54,7 @@ export default function TabLayout() {
             name="register"
             options={{
               title: 'Register',
-              tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+              tabBarIcon: ({ color }) => <TabBarIcon name="group" color={color} />,
             }}
           />
         </Tabs>
